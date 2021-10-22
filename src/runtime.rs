@@ -33,7 +33,7 @@ pub struct PersistentStorageConfig {
 impl OpenplcRuntime {
     pub fn list_services(&self) -> Vec<String> {
         //probably very suboptimal
-        vec!["modbusslave", "opcuaserver"]
+        vec!["modbusslave", "opcuaserver", "enip", "dnp3s"]
             .into_iter()
             .map(|s| String::from(s))
             .collect()
@@ -66,7 +66,7 @@ impl OpenplcRuntime {
         self.send_command(format!("start_enip({})\n", config.port))
     }
     pub fn stop_enip(&self) {
-        self.send_command(String::from("stop_enip3s()\n"))
+        self.send_command(String::from("stop_enip()\n"))
     }
 
     pub fn start_pstorage(&self, config: PersistentStorageConfig) {

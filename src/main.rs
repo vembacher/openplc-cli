@@ -1,6 +1,6 @@
 mod runtime;
 extern crate clap;
-use clap::{App, Arg};
+use clap::{App, AppSettings, Arg};
 use runtime::{
     Dnp3ServerConfig, EthernetIpServerConfig, ModbusServerConfig, OpcUaServerConfig, OpenPlcConfig,
     OpenplcRuntime,
@@ -12,7 +12,8 @@ fn main() {
         runtime_port: 43628,
     };
     let runtime = OpenplcRuntime::new(config);
-    let matches = App::new("My Super Program")
+    let matches = App::new("openplc-cli")
+        .setting(AppSettings::ArgRequiredElseHelp)
         .version("0.1.0")
         .author("Victor Embacher <victor.embacher@tum.de>")
         .about("CLI to the OpenPLC runtime.")
@@ -21,7 +22,7 @@ fn main() {
                 .short("c")
                 .long("config")
                 .value_name("FILE")
-                .help("Sets a custom config file")
+                .help("Sets a custom config file [NOT IMPLEMENTED]")
                 .takes_value(true),
         )
         .arg(
@@ -97,6 +98,6 @@ fn main() {
     } else if matches.occurrences_of("logs") > 0 {
         runtime.logs();
     } else {
-        println!("Nothing to do.")
+        println!("{}", matches.usage())
     }
 }
